@@ -1,6 +1,7 @@
 import gi
 import requests
 import signal
+import os.path
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('AppIndicator3', '0.1')
@@ -14,8 +15,12 @@ APPINDICATOR_ID = 'ethPriceIndicator'
 ETH_PRICE_LABEL = "ethPrice"
 
 class EthereumIndicator():
+
+    scriptPath = os.path.dirname(os.path.realpath(__file__)) + os.path.sep
+
     def main(self):
-        indicator = appindicator.Indicator.new(APPINDICATOR_ID, "/home/tiit/ethereum.png", appindicator.IndicatorCategory.SYSTEM_SERVICES)
+        print(self.scriptPath)
+        indicator = appindicator.Indicator.new(APPINDICATOR_ID, os.path.join(self.scriptPath, "ethereum.png"), appindicator.IndicatorCategory.SYSTEM_SERVICES)
         indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
         indicator.set_menu(self.build_menu())
         indicator.set_label("default", ETH_PRICE_LABEL) # Find and check documentation what are these args
