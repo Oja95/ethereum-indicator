@@ -13,6 +13,7 @@ from gi.repository import GObject as gobject
 
 APPINDICATOR_ID = 'ethPriceIndicator'
 ETH_PRICE_LABEL = "ethPrice"
+API_URL = "https://v2.ethereumprice.org:8080/snapshot/eth/usd/waex/1h"
 
 class EthereumIndicator():
 
@@ -40,14 +41,13 @@ class EthereumIndicator():
     def quit(self):
         gtk.main_quit()
 
-
     def update(self, indicator):
         ethPrice = self.getEthPrice()
         indicator.set_label(str(ethPrice), ETH_PRICE_LABEL)
         return True
 
     def getEthPrice(self):
-        ethJson = requests.get('https://v2.ethereumprice.org:8080/snapshot/eth/usd/waex/24h/?_=1517815371190').json()
+        ethJson = requests.get(API_URL).json()
         return ethJson["data"]["price"]
 
 
